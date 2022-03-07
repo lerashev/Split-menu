@@ -1,0 +1,95 @@
+:root {
+    --background: linear-gradient(45deg, #02001f, #1f184e);
+    --text-color: #ff2c75;
+    --text-color-2: white;
+    --line-height: 1.5;
+    --animation-duration: 200ms;
+}
+
+body {
+    font-family: "Gilroy ExtraBold", system-ui, sans-serif;
+    margin: 0;
+    background: var(--background);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list-item {
+    position: relative;
+    font-weight: bold;
+    font-size: min(3rem, 8vw);
+    margin: 0 auto;
+    width: max-content;
+}
+
+.list-item::before {
+    --height: 4px;
+    content: "";
+    position: absolute;
+    cursor: pointer;
+    left: -5%;
+    width: 110%;
+    height: var(--height);
+    top: calc(50% - var(--height) / 2);
+    transform: scale(0);
+    border-radius: 4px;
+    background-color: var(--text-color);
+    z-index: 1;
+    transition: transform var(--animation-duration) ease-in-out;
+}
+.list-item:hover::before {
+    transform: scale(1);
+}
+
+.list-item > .split-text {
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    line-height: var(--line-height);
+    position: relative;
+    transition: color 0ms var(--animation-duration);
+}
+
+.list-item:hover > .split-text {
+    color: transparent;
+    user-select: none;
+    cursor: pointer;
+    transition-delay: 0ms;
+}
+
+.list-item > .split-text::before,
+.list-item > .split-text::after {
+    content: attr(data-text);
+    position: absolute;
+    user-select: none;
+    left: 0;
+    right: 0;
+    height: calc(var(--line-height) * 0.5em);
+    overflow: hidden;
+    color: var(--text-color);
+    transition: color var(--animation-duration) ease-in-out,
+        transform var(--animation-duration) ease-in-out;
+}
+
+.list-item:hover > .split-text::before {
+    transform: skewX(15deg) translate(0, -15%);
+    color: var(--text-color-2);
+}
+.list-item:hover > .split-text::after {
+    transform: skewX(15deg) translate(5%, 15%);
+    color: var(--text-color-2);
+}
+
+.list-item > .split-text::after {
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+}
